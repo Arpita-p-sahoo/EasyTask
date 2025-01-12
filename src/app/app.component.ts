@@ -13,4 +13,8 @@ import { UserComponent } from './user/user.component';
 export class AppComponent {
   title = 'EasyTask';
   users = DUMMY_USERS;
+
+  OnrcvUser(event: string) {
+    console.log(event);
+  }
 }
