@@ -1,14 +1,21 @@
+@if(isTaskAddInitiated){
+<app-add-task-form
+  (cancelAddingTask)="OnCancelAddingTask($event)"
+  (addTask)="OnRcvdNewTask($event)"
+/>
+}
+
 <section id="tasks">
   <header>
     <h2>{{ userData?.name }}'s Tasks</h2>
     <menu>
-      <button>Add task</button>
+      <button (click)="OnAddTask()">Add task</button>
     </menu>
   </header>
 
   <ul>
     @for (task of selectedUserTask; track task.id) {
-    <li><app-task [task]="task" /></li>
+    <li><app-task [task]="task" (complete)="OnCompleteTask($event)" /></li>
 
     }
   </ul>

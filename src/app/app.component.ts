@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { User } from './interfaces/user';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { TasksComponent } from './tasks/tasks.component';
 export class AppComponent {
   title = 'EasyTask';
   users = DUMMY_USERS;
-  selectedUser!: any;
+  selectedUser!: User | any;
   OnrcvUser(event: string) {
     this.selectedUser = this.users.find((u) => u.id === event);
   }

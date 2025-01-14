@@ -1,15 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
+import { AddTaskFormComponent } from './add-task-form/add-task-form.component';
+import { type NewTask } from '../interfaces/task';
 
 @Component({
   selector: 'app-tasks',
-  imports: [TaskComponent],
+  imports: [TaskComponent, AddTaskFormComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
 })
 export class TasksComponent {
   @Input({ required: true }) userData!: any;
-
+  isTaskAddInitiated: boolean = false;
   dummyTasks = [
     {
       id: 't1',
@@ -38,5 +40,27 @@ export class TasksComponent {
 
   get selectedUserTask() {
     return this.dummyTasks.filter((task) => task.userId === this.userData.id);
+  }
+
+  OnCompleteTask(taskId: string) {
+    this.dummyTasks = this.dummyTasks.filter((task) => task.id !== taskId);
+  }
+
+  OnAddTask() {
+    this.isTaskAddInitiated = true;
+  }
+
+  OnCancelAddingTask(isCancelled: boolean) {
+    this.isTaskAddInitiated = isCancelled;
+  }
+
+  OnRcvdNewTask(taskObj: NewTask) {
+    this.dummyTasks.push({
+      id: new Date().getTime().toString(),
+      title: taskObj.title,
+      summary: taskObj.summary,
+      dueDate: taskObj.date,
+      userId: this.userData.id,
+    });
   }
 }
