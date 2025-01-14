@@ -55,12 +55,13 @@ export class TasksComponent {
   }
 
   OnRcvdNewTask(taskObj: NewTask) {
-    this.dummyTasks.push({
+    this.dummyTasks.unshift({
       id: new Date().getTime().toString(),
       title: taskObj.title,
       summary: taskObj.summary,
       dueDate: taskObj.date,
       userId: this.userData.id,
     });
+    this.isTaskAddInitiated = false;
   }
 }
