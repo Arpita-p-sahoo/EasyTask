@@ -8,11 +8,11 @@ export class TaskService {
   constructor() {
     const task = localStorage.getItem('tasks');
     if (task) {
-      this.dummyTasks = JSON.parse(task);
+      this.tasks = JSON.parse(task);
     }
   }
 
-  private dummyTasks = [
+  private tasks = [
     {
       id: 't1',
       userId: 'u1',
@@ -39,16 +39,16 @@ export class TaskService {
   ];
 
   getUserTask = (userid: string) => {
-    return this.dummyTasks.filter((task: any) => task.userId == userid);
+    return this.tasks.filter((task: any) => task.userId == userid);
   };
 
   CompleteTask = (taskid: string) => {
-    this.dummyTasks = this.dummyTasks.filter((task) => task.id !== taskid);
+    this.tasks = this.tasks.filter((task) => task.id !== taskid);
     this.SaveDataTolocalStorage();
   };
 
   AddTask = (taskObj: NewTask, userid: string) => {
-    this.dummyTasks.unshift({
+    this.tasks.unshift({
       id: new Date().getTime().toString(),
       title: taskObj.title,
       summary: taskObj.summary,
@@ -59,6 +59,6 @@ export class TaskService {
   };
 
   SaveDataTolocalStorage() {
-    localStorage.setItem('tasks', JSON.stringify(this.dummyTasks));
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 }
