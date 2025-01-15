@@ -1,8 +1,5 @@
 @if(isTaskAddInitiated){
-<app-add-task-form
-  (cancelAddingTask)="OnCancelAddingTask($event)"
-  (addTask)="OnRcvdNewTask($event)"
-/>
+<app-add-task-form [userid]="userData.id" (closeDilog)="onCloseForm($event)" />
 }
 
 <section id="tasks">
@@ -15,7 +12,7 @@
 
   <ul>
     @for (task of selectedUserTask; track task.id) {
-    <li><app-task [task]="task" (complete)="OnCompleteTask($event)" /></li>
+    <li><app-task [task]="task" /></li>
 
     }
   </ul>

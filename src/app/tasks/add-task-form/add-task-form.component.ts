@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type NewTask } from '../../interfaces/task';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-add-task-form',
@@ -9,19 +10,21 @@ import { type NewTask } from '../../interfaces/task';
   styleUrl: './add-task-form.component.css',
 })
 export class AddTaskFormComponent {
-  @Output() cancelAddingTask = new EventEmitter<boolean>();
-  @Output() addTask = new EventEmitter<NewTask>();
+  @Input({ required: true }) userid!: string;
+  @Output() closeDilog = new EventEmitter<boolean>();
   title!: string;
   summary!: string;
   dueDate!: string;
+
+  private taskSvc = inject(TaskService);
   OnCancelAddingTask() {
-    this.cancelAddingTask.emit(false);
+    this.closeDilog.emit(false);
   }
   OnSubmitTask() {
-    this.addTask.emit({
-      title: this.title,
-      summary: this.summary,
-      date: this.dueDate,
-    });
+    this.taskSvc.AddTask(
+      { title: this.title, summary: this.summary, date: this.dueDate },
+      this.userid
+    );
+    this.closeDilog.emit(false);
   }
 }
